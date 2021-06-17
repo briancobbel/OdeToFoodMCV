@@ -25,6 +25,7 @@ namespace OdeToFood.Web.Controllers
             return View(model);
         }
 
+        // DETALS PAGE
         [HttpGet]
         public ActionResult Details(int id)
         {
@@ -36,6 +37,8 @@ namespace OdeToFood.Web.Controllers
             return View(model);
         }
 
+
+        // CREATE ACTION
         [HttpGet]
         public ActionResult Create()
         {
@@ -56,6 +59,8 @@ namespace OdeToFood.Web.Controllers
             return View();
         }
 
+
+        // EDIT ACTION
         [HttpGet]
         public ActionResult Edit(int id)
         {
@@ -74,9 +79,30 @@ namespace OdeToFood.Web.Controllers
             if(ModelState.IsValid)
             {
                 db.Update(restaurant);
+                TempData["Message"] = "You have saved a restaurant!";
                 return RedirectToAction("Details", new { id = restaurant.Id });
             }
             return View(restaurant);
+        }
+
+        // DELETE A RESTAURANT ACTION
+        [HttpGet]
+        public ActionResult Delete(int id)
+        {
+            var model = db.Get(id);
+            if (model == null)
+            {
+                return View("NotFound");
+            }
+            return View(model); 
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(int id, FormCollection form)
+        {
+            db.Delete(id);
+            return RedirectToAction("Index");
         }
     }
 }
