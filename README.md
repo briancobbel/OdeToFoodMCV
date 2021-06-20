@@ -1,4 +1,4 @@
-# OdeToFoodMCV
+# OdeToFoodMVC
 
 Pluralsight course project
 
